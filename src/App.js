@@ -20,7 +20,7 @@ function App() {
   console.log(loggedInUser);
   return (
     <LoggedInUserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      <h1>{loggedInUser}</h1>
+      {/* <h1>Name: {loggedInUser.email} </h1> */}
       <Router>
         <Header></Header>
         <Switch>

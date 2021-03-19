@@ -7,6 +7,7 @@ import { LoggedInUserContext } from '../../App';
 
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(LoggedInUserContext);
+
     const handleGoogleSignIn = () => {
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -20,16 +21,13 @@ const Login = () => {
             .then((result) => {
                 /** @type {firebase.auth.OAuthCredential} */
                 var credential = result.credential;
-
-                // This gives you a Google Access Token. You can use it to access the Google API.
                 var token = credential.accessToken;
-                // The signed-in user info.
                 const { displayName, email } = result.user;
-                const signedInUser = { name: displayName, email: email };
+                const signedInUser = { name: displayName, email };
                 console.log(signedInUser);
                 setLoggedInUser(signedInUser);
                 console(loggedInUser);
-                // ...
+
             }).catch((error) => {
                 // Handle Errors here.
                 var errorCode = error.code;
