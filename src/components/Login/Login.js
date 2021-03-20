@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -6,13 +6,21 @@ import firebaseConfig from './firebase.config';
 import { LoggedInUserContext } from '../../App';
 
 const Login = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(LoggedInUserContext);
+    const [newUser, setNewUser] = useState(false);
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        isSignIn: false,
+    });
+
     if (firebase.apps.length === 0) {
         firebase.initializeApp(firebaseConfig);
     }
     // else {
     //     firebase.app(); // if already initialized, use that one
     // }
+
+    const [loggedInUser, setLoggedInUser] = useContext(LoggedInUserContext);
 
     const handleGoogleSignIn = () => {
         // console.log('ehhhhhe');
@@ -24,7 +32,7 @@ const Login = () => {
                 const signedInUser = {
                     name: displayName,
                     email: email,
-                    isSignIn: true
+                    isSignIn: true,
                 };
                 setLoggedInUser(signedInUser);
             }).catch((error) => {
@@ -34,7 +42,8 @@ const Login = () => {
 
     }
 
-    const handleRandomSignIn = (event) => {
+
+    const handleRandomSignIn = () => {
         firebase.auth().signInWithEmailAndPassword(loggedInUser.email, loggedInUser.password)
             .then((userCredential) => {
                 // Signed in
@@ -43,9 +52,12 @@ const Login = () => {
                 const signedInUser = {
                     name: displayName,
                     email: email,
-                    isSignIn: true
+                    isSignIn: true,
+
                 };
+                console.log(signedInUser);
                 setLoggedInUser(signedInUser);
+
                 // ...
             })
             .catch((error) => {
@@ -53,6 +65,7 @@ const Login = () => {
                 var errorMessage = error.message;
             });
     }
+
 
     const handleSingOut = () => {
         firebase.auth()
@@ -62,6 +75,7 @@ const Login = () => {
                     isSignIn: false,
                     name: '',
                     email: '',
+
                 }
                 setLoggedInUser(signOutUser);
 
@@ -86,15 +100,15 @@ const Login = () => {
             isFieldValid = isPassValid && isPassHasNumber;
         }
         if (isFieldValid) {
-            const newUserInfo = { ...loggedInUser };
+            const newUserInfo = { ...user };
             newUserInfo[event.target.name] = event.target.value;
-            setLoggedInUser(newUserInfo);
+            setUser(newUserInfo);
         }
     }
 
     const handleSubmit = (event) => {
         // console.log(user.email, user.password);
-        if (loggedInUser.email && loggedInUser.password) {
+        if (!newUser && user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(loggedInUser.email, loggedInUser.password)
                 .then((userCredential) => {
                     // Signed in 
@@ -111,7 +125,10 @@ const Login = () => {
                     // ..
                 });
             console.log('submitting');
-            
+
+        }
+        if (!newUser && loggedInUser.email && loggedInUser.password) {
+            handleRandomSignIn(event);
         }
         event.preventDefault();
     }
@@ -120,8 +137,10 @@ const Login = () => {
 
     return (
         <div>
+            <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""></input>
+            <label htmlFor="newUser">New User Sing Up</label>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="name" placeholder="Name" required onBlur={handleChange}></input>
+                {newUser && <input type="text" name="name" placeholder="Name" required onBlur={handleChange}></input>}
                 <br />
                 <input type="text" name="email" placeholder="enter email" required onBlur={handleChange} />
                 <br />

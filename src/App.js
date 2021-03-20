@@ -12,21 +12,18 @@ import NoMatch from './components/NoMatch/NoMatch';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import { createContext, useState } from 'react';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Destination from './components/Destination/Destination';
 
 export const LoggedInUserContext = createContext();
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({
-    name: '',
-    email: '',
-    isSignIn: false
-  });
-  console.log(loggedInUser);
+  const [loggedInUser, setLoggedInUser] = useState({});
+  console.log(loggedInUser.name);
   return (
     <LoggedInUserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-
+      {/* <h1>Name: {loggedInUser.name} </h1> */}
       <Router>
-        <h1>Name: {loggedInUser.name} </h1>
         <Header></Header>
         <Switch>
           <Route path="/home">
@@ -39,6 +36,9 @@ function App() {
           <Route path="/login">
             <Login></Login>
           </Route>
+          <PrivateRoute path="/vehicle">
+            <Destination></Destination>
+          </PrivateRoute>
 
 
 
@@ -47,6 +47,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <h1>Name: {loggedInUser.name} </h1>
     </LoggedInUserContext.Provider>
   );
 }

@@ -4,16 +4,16 @@ import fakeData from '../../fakeData/fakeData'
 import Vehicle from '../Vehicle/Vehicle';
 
 const Home = () => {
-    const [vehicles, setVehicle] = useState([]);
+    const [vehicles, setVehicles] = useState([]);
 
     useEffect(() => {
-        setVehicle(fakeData);
+        setVehicles(fakeData);
     }, [])
 
     // console.log(vehicles);
 
     return (
-        <Row>
+        <Row style={{ marginTop: '50px' }}>
             {
                 vehicles.map(vehicle => <Vehicle vehicle={vehicle}></Vehicle>)
             }
