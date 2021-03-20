@@ -16,12 +16,17 @@ import { createContext, useState } from 'react';
 export const LoggedInUserContext = createContext();
 
 function App() {
-  const { loggedInUser, setLoggedInUser } = useState({});
+  const [loggedInUser, setLoggedInUser] = useState({
+    name: '',
+    email: '',
+    isSignIn: false
+  });
   console.log(loggedInUser);
   return (
     <LoggedInUserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      {/* <h1>Name: {loggedInUser.email} </h1> */}
+
       <Router>
+        <h1>Name: {loggedInUser.name} </h1>
         <Header></Header>
         <Switch>
           <Route path="/home">
