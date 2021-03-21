@@ -14,14 +14,14 @@ const Header = () => {
         <div style={{ marginBottom: '100px' }}>
             <Navbar bg="dark" variant="dark" fixed='top'>
                 <Navbar.Brand href="/">
-                    <img
+                    {/* <img
                         alt=""
                         src="/logo.svg"
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
-                    />{' '}
-                        React Bootstrap
+                    />{' '} */}
+                        Dhaka Wheels
                 </Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/home">Home</Nav.Link>
