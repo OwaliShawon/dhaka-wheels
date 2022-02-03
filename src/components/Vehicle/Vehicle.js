@@ -1,9 +1,6 @@
 import React from 'react';
-import { Button, Card, Col, Row } from 'react-bootstrap';
-import Switch from 'react-bootstrap/esm/Switch';
-import { Route, Router } from 'react-router';
+import { Button, Card, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Destination from '../Destination/Destination';
 
 const Vehicle = (props) => {
     const { id, type, image } = props.vehicle;
@@ -19,10 +16,10 @@ const Vehicle = (props) => {
 
     }
     return (
-        <Col>
+        <Col ol>
             <Link to='/destination'>
                 <Button onClick={handleVehicleClick} style={{ margin: '10px' }}>
-                    <Card style={{ width: '20rem' }}>
+                    <Card className='p-5' style={{ width: '20rem' }}>
                         <Card.Img variant="top" src={image} />
                         <Card.Body>
                             <Card.Title style={{ color: 'black' }}>{type}</Card.Title>

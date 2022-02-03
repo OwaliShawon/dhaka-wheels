@@ -1,19 +1,15 @@
-import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import Home from './components/Home/Home';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import NoMatch from './components/NoMatch/NoMatch';
-import Header from './components/Header/Header';
-import Login from './components/Login/Login';
 import { createContext, useState } from 'react';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import {
+  BrowserRouter as Router, Route, Switch
+} from "react-router-dom";
+import './App.css';
 import Destination from './components/Destination/Destination';
+import Header from './components/Header/Header';
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
+import NoMatch from './components/NoMatch/NoMatch';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export const LoggedInUserContext = createContext();
 
@@ -22,7 +18,7 @@ function App() {
   console.log(loggedInUser.name);
   return (
     <LoggedInUserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      {/* <h1>Name: {loggedInUser.name} </h1> */}
+      <h1>Name: {loggedInUser.name} </h1>
       <Router>
         <Header></Header>
         <Switch>
@@ -39,8 +35,6 @@ function App() {
           <PrivateRoute path="/destination">
             <Destination></Destination>
           </PrivateRoute>
-
-
 
           <Route path="*">
             <NoMatch />
